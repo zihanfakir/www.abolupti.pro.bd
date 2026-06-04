@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="bn">
+
+<head>
+    <meta charset="UTF-8">
+    <!-- Viewport-fit=cover is for mobile notch support -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=5.0">
+    <title>অবলুপ্তি | জিহান ফকির (Zihan Fakir)</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Noto+Sans+Bengali:wght@400;600;700&family=Noto+Serif+Bengali:wght@400;600;700&family=Tiro+Bangla:ital@0;1&display=swap" rel="stylesheet">
+
+    <script>
+        const validThemes = ['light', 'dark', 'glass', 'dark-glass', 'fire', 'fire-dark', 'liquid', 'oled-dark', 'glacier'];
+        let savedTheme = 'glacier';
+        try { savedTheme = localStorage.getItem('theme') || 'glacier'; } catch (e) { }
+        if (!validThemes.includes(savedTheme)) savedTheme = 'glacier';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+    </script>
+
+    <style>
+        /* CSS Variables */
+        :root {
+            --bg-color: #f8f5f0;
+            --bg-image: none;
+            --text-color: #2c2c2c;
+            --accent-color: #b58500;
+            --header-bg: rgba(248, 245, 240, 0.9);
+            --cursor-color: rgba(181, 133, 0, 0.5);
+            --card-bg: #ffffff;
+            --border-color: rgba(181, 133, 0, 0.2);
+            --progress-bg: #e0e0e0;
+            --card-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+            --card-backdrop: none;
+            --reading-font-size: 18px;
+            --reading-font-family: 'Noto Serif Bengali', serif;
+        }
+
+        /* Themes */
+        [data-theme="dark"] {
+            --bg-color: #121212; --text-color: #e0e0e0; --accent-color: #d4af37;
+            --header-bg: rgba(18, 18, 18, 0.9); --cursor-color: rgba(212, 175, 55, 0.5);
+            --card-bg: #1e1e1e; --border-color: rgba(212, 175, 55, 0.2);
+            --progress-bg: #333333; --card-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        [data-theme="glass"] {
+            --bg-color: #f3f4f6; --bg-image: linear-gradient(135deg, #e0eafc 0%, #cfdef3 100%);
+            --text-color: #1f2937; --accent-color: #3b82f6; --header-bg: rgba(255, 255, 255, 0.2);
+            --cursor-color: rgba(59, 130, 246, 0.5); --card-bg: rgba(255, 255, 255, 0.35);
+            --border-color: rgba(255, 255, 255, 0.6); --progress-bg: rgba(255, 255, 255, 0.4);
+            --card-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1); --card-backdrop: blur(12px);
+        }
+
+        [data-theme="dark-glass"] {
+            --bg-color: #111827; --bg-image: linear-gradient(135deg, #1f2937 0%, #030712 100%);
+            --text-color: #f3f4f6; --accent-color: #38bdf8; --header-bg: rgba(17, 24, 39, 0.3);
+            --cursor-color: rgba(56, 189, 248, 0.5); --card-bg: rgba(31, 41, 55, 0.3);
+            --border-color: rgba(255, 255, 255, 0.1); --progress-bg: rgba(255, 255, 255, 0.1);
+            --card-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5); --card-backdrop: blur(12px);
+        }
+
+        [data-theme="fire"] {
+            --bg-color: #fffaf0; --bg-image: linear-gradient(120deg, #f6d365 0%, #fda085 100%);
+            --text-color: #4a1500; --accent-color: #e65100; --header-bg: rgba(253, 160, 133, 0.4);
+            --cursor-color: rgba(230, 81, 0, 0.5); --card-bg: rgba(255, 255, 255, 0.6);
+            --border-color: rgba(230, 81, 0, 0.3); --progress-bg: rgba(255, 255, 255, 0.5);
+            --card-shadow: 0 4px 15px rgba(230, 81, 0, 0.2); --card-backdrop: blur(8px);
+        }
+
+        [data-theme="fire-dark"] {
+            --bg-color: #120000; --bg-image: linear-gradient(to top, #320404 0%, #000000 100%);
+            --text-color: #ffdcb8; --accent-color: #ff5722; --header-bg: rgba(18, 0, 0, 0.8);
+            --cursor-color: rgba(255, 87, 34, 0.5); --card-bg: #2a0808;
+            --border-color: rgba(255, 87, 34, 0.4); --progress-bg: #401010;
+            --card-shadow: 0 4px 15px rgba(255, 87, 34, 0.3);
+        }
+
+        [data-theme="liquid"] {
+            --bg-color: #e0f2fe; --bg-image: linear-gradient(135deg, #89f7fe 0%, #66a6ff 100%);
+            --text-color: #0c4a6e; --accent-color: #0284c7; --header-bg: rgba(224, 242, 254, 0.4);
+            --cursor-color: rgba(2, 132, 199, 0.5); --card-bg: rgba(255, 255, 255, 0.4);
+            --border-color: rgba(255, 255, 255, 0.6); --progress-bg: rgba(255, 255, 255, 0.5);
+            --card-shadow: 0 8px 32px 0 rgba(2, 132, 199, 0.15); --card-backdrop: blur(12px);
+        }
+
+        [data-theme="oled-dark"] {
+            --bg-color: #000000; --text-color: #ededed; --accent-color: #00e5ff;
+            --header-bg: rgba(0, 0, 0, 0.85); --cursor-color: rgba(0, 229, 255, 0.5);
+            --card-bg: #080808; --border-color: #222222; --progress-bg: #111111;
+            --card-shadow: 0 4px 15px rgba(0, 229, 255, 0.03); --card-backdrop: blur(10px);
+        }
+
+        [data-theme="glacier"] {
+            --bg-color: #f0f8ff; --bg-image: linear-gradient(135deg, #e0f2fe 0%, #cffafe 100%);
+            --text-color: #0f172a; --accent-color: #06b6d4; --header-bg: rgba(240, 248, 255, 0.6);
+            --cursor-color: rgba(6, 182, 212, 0.5); --card-bg: rgba(255, 255, 255, 0.5);
+            --border-color: rgba(255, 255, 255, 0.8); --progress-bg: rgba(255, 255, 255, 0.6);
+            --card-shadow: 0 8px 32px 0 rgba(6, 182, 212, 0.1); --card-backdrop: blur(12px);
+        }
+
+        /* Basic Reset & Hardware Acceleration */
+        * {
+            margin: 0; padding: 0; box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* Fixed Background for smooth scrolling */
+        html::before {
+            content: ''; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            background-color: var(--bg-color); background-image: var(--bg-image);
+            z-index: -100; transition: background-color 0.4s ease;
+            transform: translateZ(0); /* Hardware acceleration */
+        }
+
+        /* ANTI-COPY & TOUCH FIXES */
+        body {
+            font-family: 'Hind Siliguri', sans-serif;
+            background-color: transparent;
+            color: var(--text-color);
+            transition: color 0.4s ease;
+            line-height: 1.8; overflow-x: hidden;
+            min-height: 100vh;
+            @supports (min-height: 100dvh) { min-height: 100dvh; }
+            -webkit-font-smoothing: antialiased;
+            text-rendering: optimizeLegibility;
+            cursor: none;
+            
+            /* Anti-Copy */
+            user-select: none; -webkit-user-select: none; -ms-user-select: none; -moz-user-select: none;
+            -webkit-touch-callout: none; /* Disables long-press context menu on iOS */
+        }
+
+        select, option { cursor: pointer; }
+        button, .item-card, .theme-option, .bookmark-btn, select { touch-action: manipulation; }
+
+        /* Smooth Animations */
+        .theme-animating {
+            animation: themePulse 0.4s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+            will-change: opacity, transform;
+        }
+
+        @keyframes themePulse {
+            0% { opacity: 1; transform: scale(1) translateY(0); }
+            50% { opacity: 0; transform: scale(0.98) translateY(4px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        /* Custom Cursor (Hidden by default on touch devices) */
+        .cursor-dot, .cursor-outline {
+            position: fixed; top: 0; left: 0;
+            transform: translate(-50%, -50%);
+            border-radius: 50%; z-index: 9999; pointer-events: none;
+            will-change: transform;
+        }
+        .cursor-dot { width: 8px; height: 8px; background-color: var(--accent-color); transition: background-color 0.4s ease; }
+        .cursor-outline { width: 40px; height: 40px; border: 2px solid var(--cursor-color); transition: width 0.2s, height 0.2s, border-color 0.4s ease, background-color 0.2s; }
+
+        /* Header with Notch Support */
+        header {
+            position: fixed; top: 0; width: 100%;
+            /* Padding top includes safe-area for notches (iPhone X/11/12/etc) */
+            padding: calc(15px + env(safe-area-inset-top)) 50px 15px 50px;
+            display: flex; justify-content: space-between; align-items: center;
+            background-color: var(--header-bg); backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px); z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05); transition: background-color 0.4s ease, padding 0.3s;
+        }
+
+        .logo {
+            font-size: 24px; font-weight: 700; color: var(--accent-color);
+            letter-spacing: 1px; display: flex; align-items: center; gap: 10px;
+            transition: color 0.4s ease; cursor: none;
+        }
+
+        .nav-buttons { display: flex; gap: 15px; align-items: center; }
+
+        button {
+            background: transparent; border: 2px solid var(--accent-color); color: var(--accent-color);
+            padding: 8px 20px; border-radius: 30px; font-weight: 600; min-height: 44px; /* Hitbox fix */
+            transition: all 0.3s ease; font-family: inherit; outline: none; cursor: none;
+            display: flex; align-items: center; justify-content: center;
+        }
+        button:active { transform: scale(0.95); }
+
+        /* Theme Dropdown */
+        .theme-dropdown { position: relative; display: inline-block; }
+        .theme-menu {
+            position: absolute; top: calc(100% + 15px); right: 0;
+            background: var(--card-bg); border: 1px solid var(--border-color);
+            border-radius: 12px; box-shadow: var(--card-shadow);
+            backdrop-filter: var(--card-backdrop); -webkit-backdrop-filter: var(--card-backdrop);
+            min-width: 180px; display: flex; flex-direction: column; z-index: 1001;
+            visibility: hidden; opacity: 0; transform: translateY(-10px);
+            transition: visibility 0.3s, opacity 0.3s ease, transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), background-color 0.4s ease;
+            overflow: hidden;
+        }
+        .theme-dropdown.open .theme-menu { visibility: visible; opacity: 1; transform: translateY(0); }
+        .theme-option {
+            padding: 12px 20px; font-size: 14px; font-weight: 600; color: var(--text-color);
+            border-bottom: 1px solid var(--border-color); transition: all 0.3s ease;
+            cursor: none; min-height: 48px; display: flex; align-items: center; /* Hitbox fix */
+        }
+        .theme-option:last-child { border-bottom: none; }
+        .theme-option:active { background: var(--accent-color); color: var(--bg-color); }
+        .theme-option.active-theme { color: var(--accent-color); padding-left: 25px; }
+
+        /* Views */
+        .view-section {
+            display: none; opacity: 0; transform: translateY(20px);
+            transition: opacity 0.4s cubic-bezier(0.25, 1, 0.5, 1), transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+            padding-top: calc(100px + env(safe-area-inset-top)); will-change: opacity, transform; 
+            padding-bottom: env(safe-area-inset-bottom);
+        }
+        .view-section.active { display: block; opacity: 1; transform: translateY(0); }
+
+        /* Home Page */
+        .home-container { max-width: 900px; margin: 0 auto; padding: 20px; }
+        .hero { text-align: center; padding: 30px 0 50px; animation: fadeInDown 0.8s cubic-bezier(0.25, 1, 0.5, 1); }
+
+        .book-cover-container {
+            perspective: 1200px; display: flex; justify-content: center; margin-bottom: 40px;
+            min-height: 300px; animation: premiumFloat 6s ease-in-out infinite; will-change: transform;
+        }
+        @keyframes premiumFloat {
+            0%, 100% { transform: translateY(0px) translateZ(0); }
+            50% { transform: translateY(-12px) translateZ(0); }
+        }
+
+        .book-cover {
+            width: 220px; height: 100%; border-radius: 5px 15px 15px 5px;
+            box-shadow: -8px 10px 25px rgba(0, 0, 0, 0.15), inset 4px 0 10px rgba(255, 255, 255, 0.2);
+            transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.6s ease;
+            border-left: 6px solid var(--accent-color); background-color: var(--card-bg);
+            object-fit: cover; cursor: none; will-change: transform; transform-style: preserve-3d;
+        }
+
+        .hero h1 { font-size: 56px; color: var(--accent-color); margin-bottom: 10px; transition: color 0.4s ease; }
+        .hero p { font-size: 20px; font-style: italic; opacity: 0.8; margin-bottom: 30px; }
+        .hero button { font-size: 18px; padding: 12px 30px; min-height: 50px; margin: 0 auto; }
+
+        .dashboard { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-bottom: 50px; }
+        .stat-card {
+            background-color: var(--card-bg); border: 1px solid var(--border-color);
+            padding: 25px; border-radius: 15px; text-align: center; box-shadow: var(--card-shadow);
+            backdrop-filter: var(--card-backdrop); -webkit-backdrop-filter: var(--card-backdrop);
+            transition: transform 0.3s ease, background-color 0.4s ease, border-color 0.4s ease;
+        }
+        .stat-title { font-size: 16px; opacity: 0.7; margin-bottom: 10px; }
+        .stat-value { font-size: 28px; font-weight: bold; color: var(--accent-color); transition: color 0.4s ease; }
+
+        /* Lists */
+        .section-title {
+            font-size: 28px; color: var(--accent-color); border-bottom: 2px solid var(--cursor-color);
+            padding-bottom: 10px; margin-bottom: 20px; transition: color 0.4s ease, border-color 0.4s ease;
+        }
+        .list-container { display: flex; flex-direction: column; gap: 15px; }
+        .item-card {
+            background-color: var(--card-bg); border: 1px solid var(--border-color); padding: 15px 25px;
+            border-radius: 10px; display: flex; justify-content: space-between; align-items: center;
+            box-shadow: var(--card-shadow); backdrop-filter: var(--card-backdrop); -webkit-backdrop-filter: var(--card-backdrop);
+            transition: transform 0.3s ease, background-color 0.4s ease, border-color 0.4s ease;
+            cursor: none; min-height: 60px;
+        }
+        .item-card:active { transform: scale(0.98); }
+        .item-title { font-size: 18px; font-weight: 600; transition: color 0.3s; pointer-events: none; flex: 1; padding-right: 15px; }
+        .bookmark-btn {
+            background: none; border: none; font-size: 24px; color: var(--text-color);
+            opacity: 0.3; transition: all 0.3s ease; padding: 10px 15px; margin: -10px -15px;
+            z-index: 10; transform-origin: center; cursor: none; min-height: 48px; min-width: 48px;
+        }
+        .bookmark-btn.active { color: var(--accent-color); opacity: 1; }
+        .bookmark-btn:active { transform: scale(1.3); }
+
+        /* Reading View */
+        .book-container { max-width: 800px; margin: 0 auto 50px; padding: 0 20px; }
+        .font-controls {
+            display: flex; flex-wrap: wrap; justify-content: flex-end; align-items: center;
+            gap: 10px; margin-bottom: 20px; padding-bottom: 15px;
+            border-bottom: 1px dashed var(--border-color); transition: border-color 0.4s ease;
+        }
+        .font-controls-group { display: flex; align-items: center; gap: 8px; margin-left: auto; }
+        #fontSelect {
+            background-color: transparent; color: var(--text-color); border: 1px solid var(--border-color);
+            padding: 6px 12px; border-radius: 8px; font-family: 'Hind Siliguri', sans-serif;
+            font-size: 14px; outline: none; transition: border-color 0.4s ease, color 0.4s ease;
+            appearance: none; -webkit-appearance: none; min-height: 44px; /* Touch target */
+        }
+        #fontSelect option { background-color: var(--card-bg); color: var(--text-color); }
+        .font-controls span { font-size: 14px; opacity: 0.7; }
+        .font-controls button { padding: 4px 12px; font-size: 16px; border-radius: 8px; min-height: 44px; min-width: 44px; }
+
+        /* CHAPTER READING VIEW */
+        .chapter {
+            display: none; padding-top: 20px; animation: fadeIn 0.5s ease;
+            font-family: var(--reading-font-family);
+            /* Fully Non-Selectable */
+            user-select: none; -webkit-user-select: none; -ms-user-select: none; -moz-user-select: none;
+        }
+        .chapter.active-chapter { display: block; }
+        .chapter h2 {
+            font-size: 28px; margin-bottom: 20px; color: var(--accent-color);
+            border-bottom: 1px solid var(--cursor-color); padding-bottom: 10px;
+            display: inline-block; transition: color 0.4s ease, border-color 0.4s ease;
+        }
+        .chapter p {
+            font-size: var(--reading-font-size); margin-bottom: 20px; text-align: justify;
+            transition: font-size 0.3s ease; line-height: 1.9;
+        }
+
+        .pagination {
+            display: flex; justify-content: space-between; margin-top: 50px;
+            padding-top: 20px; border-top: 1px solid var(--border-color);
+            gap: 10px; transition: border-color 0.4s ease; flex-wrap: wrap;
+        }
+        .pagination button { min-height: 48px; }
+        #finishBtn { background-color: var(--accent-color); color: var(--bg-color); width: 100%; text-align: center; }
+
+        .floating-progress { position: fixed; top: 0; left: 0; width: 100%; height: 4px; background: transparent; z-index: 1001; }
+        .floating-progress-bar { height: 100%; background: var(--accent-color); width: 0%; transition: width 0.3s ease, background-color 0.4s ease; }
+        .empty-message { text-align: center; padding: 40px; font-style: italic; opacity: 0.6; }
+
+        @keyframes fadeInDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        /* FOOTER */
+        footer {
+            text-align: center; padding: 40px 20px; border-top: 1px solid var(--border-color);
+            margin-top: 60px; font-size: 14px; opacity: 0.8;
+            transition: border-color 0.4s ease, background-color 0.4s ease;
+            display: flex; flex-direction: column; align-items: center; gap: 15px;
+            padding-bottom: calc(40px + env(safe-area-inset-bottom));
+        }
+        .powered-by { display: flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: wrap; margin-top: 5px; }
+        .powered-text { font-size: 12px; text-transform: uppercase; letter-spacing: 1.5px; opacity: 0.6; font-weight: 600; }
+        .tech-logos { display: flex; align-items: center; gap: 15px; }
+        .tech-logo { height: 22px; width: auto; object-fit: contain; transition: transform 0.3s ease; opacity: 0.85; }
+
+        /* Desktop Hover Optimization */
+        @media (hover: hover) and (pointer: fine) {
+            button:hover, #fontSelect:hover { background: var(--accent-color); color: var(--bg-color); }
+            .theme-option:hover { background: var(--accent-color); color: var(--bg-color); padding-left: 25px; }
+            .stat-card:hover { transform: translateY(-5px); }
+            .item-card:hover { border-color: var(--accent-color); transform: scale(1.01); }
+            .item-card:hover .item-title { color: var(--accent-color); }
+            .bookmark-btn:hover { opacity: 1; transform: scale(1.2); }
+            .book-cover:hover { transform: rotateY(-22deg) rotateX(5deg) scale(1.08); box-shadow: -15px 20px 35px rgba(0, 0, 0, 0.25), inset 8px 0 15px rgba(255, 255, 255, 0.3); }
+            .tech-logo:hover { transform: scale(1.1); opacity: 1; }
+        }
+
+        /* Mobile Touch Screen Optimization (Disables laggy elements) */
+        @media (hover: none) and (pointer: coarse) {
+            .cursor-dot, .cursor-outline { display: none !important; }
+            body, * { cursor: auto !important; }
+            .book-cover-container { animation-duration: 8s; } /* Slower animation on mobile to save CPU */
+        }
+
+        /* Mobile Layout */
+        @media (max-width: 768px) {
+            header { padding: calc(12px + env(safe-area-inset-top)) 15px 12px 15px; }
+            .logo { font-size: 20px; }
+            .logo span:last-child { display: none; }
+            .nav-buttons { gap: 6px; }
+            button { padding: 8px 12px; font-size: 13px; }
+            .view-section { padding-top: calc(85px + env(safe-area-inset-top)); }
+            .theme-menu { top: calc(100% + 10px); right: 0; min-width: 150px; }
+            .book-cover-container { min-height: 230px; margin-bottom: 25px; }
+            .book-cover { width: 160px; box-shadow: -5px 8px 20px rgba(0, 0, 0, 0.15), inset 2px 0 5px rgba(255, 255, 255, 0.2); }
+            .hero h1 { font-size: 34px; margin-bottom: 5px; }
+            .hero p { font-size: 16px; margin-bottom: 25px; }
+            .hero button { width: 100%; max-width: 300px; }
+            .stat-card { padding: 15px; }
+            .stat-value { font-size: 24px; }
+            .section-title { font-size: 22px; }
+            .item-card { padding: 12px 15px; min-height: 55px; }
+            .item-title { font-size: 16px; }
+            .chapter h2 { font-size: 24px; }
+            .chapter p { text-align: left; line-height: 2.0; }
+            .pagination { flex-direction: column; gap: 12px; }
+            .pagination button { width: 100%; padding: 15px; font-size: 16px; min-height: 50px; border-radius: 12px; }
+            .font-controls { flex-direction: column; align-items: flex-start; gap: 12px; border-bottom-style: solid; padding-bottom: 20px; }
+            .font-controls-group { margin-left: 0; width: 100%; justify-content: space-between; }
+            #fontSelect { width: 100%; text-align: center; font-size: 16px; height: 48px; }
+            .font-controls-group button { height: 48px; min-width: 48px; font-size: 18px; }
+            footer { padding: 30px 15px calc(30px + env(safe-area-inset-bottom)); gap: 12px; }
+            .powered-by { gap: 8px; }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Custom Cursors -->
+    <div class="cursor-dot" id="cursor-dot"></div>
+    <div class="cursor-outline" id="cursor-outline"></div>
+
+    <header>
+        <div class="logo" id="logoBtn">
+            <span>অবলুপ্তি</span>
+            <span style="font-size: 14px; opacity: 0.8;">| জিহান ফকির</span>
+        </div>
+        <div class="nav-buttons">
+            <button id="homeBtn" style="display: none;">হোম</button>
+            <button id="bookmarkPageBtn">বুকমার্ক</button>
+
+            <div class="theme-dropdown" id="themeDropdown">
+                <button id="themeToggleBtn">থিম ▼</button>
+                <div class="theme-menu" id="themeMenu">
+                    <div class="theme-option" data-theme-value="light">লাইট (Light)</div>
+                    <div class="theme-option" data-theme-value="dark">ডার্ক (Dark)</div>
+                    <div class="theme-option" data-theme-value="glass">গ্লাস (Glass)</div>
+                    <div class="theme-option" data-theme-value="dark-glass">ডার্ক গ্লাস (Dark Glass)</div>
+                    <div class="theme-option" data-theme-value="fire">ফায়ার (Fire)</div>
+                    <div class="theme-option" data-theme-value="fire-dark">ফায়ার ডার্ক (Fire Dark)</div>
+                    <div class="theme-option" data-theme-value="liquid">লিকুইড (Liquid)</div>
+                    <div class="theme-option" data-theme-value="oled-dark">ওলেড ডার্ক (OLED Dark)</div>
+                    <div class="theme-option" data-theme-value="glacier">গ্লেসিয়ার (Glacier)</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="floating-progress">
+        <div class="floating-progress-bar" id="floating-bar"></div>
+    </div>
+
+    <!-- Home View -->
+    <div id="home-view" class="view-section active">
+        <div class="home-container">
+            <div class="hero">
+                <div class="book-cover-container">
+                    <img src="2.png" alt="অবলুপ্তি বইয়ের প্রচ্ছদ" class="book-cover" onerror="this.onerror=null; this.style.opacity='0';">
+                </div>
+                <h1>অবলুপ্তি</h1>
+                <p style="margin-bottom: 5px;">লেখক: জিহান ফকির</p>
+                <p style="font-size: 16px; opacity: 0.7; margin-bottom: 30px;">"সব কিছুরই শেষ আছে। পৃথিবীতে কোন কিছুই স্থায়ী নয়। কিন্তু ভালোবাসার কখনো বিলুপ্ত হয় না।"</p>
+                <button id="mainReadBtn">পড়া শুরু করুন</button>
+            </div>
+
+            <div class="dashboard">
+                <div class="stat-card">
+                    <div class="stat-title">মোট অধ্যায়</div>
+                    <div class="stat-value" id="totalChaptersCount">...</div>
+                </div>
+            </div>
+
+            <div class="toc-section">
+                <div class="section-title"><span>সূচিপত্র</span></div>
+                <div class="list-container" id="toc-list"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bookmarks View -->
+    <div id="bookmarks-view" class="view-section">
+        <div class="home-container">
+            <div class="section-title"><span>আপনার বুকমার্কসমূহ</span></div>
+            <div class="list-container" id="bookmark-list"></div>
+        </div>
+    </div>
+
+    <!-- Reading View -->
+    <div id="reading-view" class="view-section">
+        <div class="book-container">
+            <div class="font-controls">
+                <select id="fontSelect" aria-label="ফন্ট পরিবর্তন করুন" title="ফন্ট পরিবর্তন করুন">
+                    <option value="'Noto Serif Bengali', serif">Noto Serif (ডিফল্ট)</option>
+                    <option value="'Noto Sans Bengali', sans-serif">Noto Sans</option>
+                    <option value="'Hind Siliguri', sans-serif">Hind Siliguri</option>
+                    <option value="'Tiro Bangla', serif">Tiro Bangla</option>
+                </select>
+
+                <div class="font-controls-group">
+                    <span>ফন্ট সাইজ:</span>
+                    <button id="decreaseFontBtn" aria-label="ফন্ট ছোট করুন">A-</button>
+                    <button id="resetFontBtn" aria-label="ফন্ট রিসেট করুন">A</button>
+                    <button id="increaseFontBtn" aria-label="ফন্ট বড় করুন">A+</button>
+                </div>
+            </div>
+
+            <div id="chapters-wrapper">
+                <div class="chapter" id="chapter-1">
+                    <h2>প্রথম অধ্যায়</h2>
+                    <p>জিহান ক্লাস টেন এ পরে। জিহান এর লাইফ টা প্রতিদিন একই রকম ছিল। প্রতিদিন সকালে ঘুম থেকে উঠে গোসল করে স্কুলের পাশে প্রাইভেট পড়তো। প্রাইভেট শেষ করে ঐখান থেকে স্কুল এ যেতো। জিহান খুব শান্ত ছিল। স্কুলে গিয়ে বেশি কথা বা দুষ্টামি করতো না অন্য ছেলেদের মতো। স্কুলের স্যার ম্যাডাম সবাই জিহানকে অনেক ভালো বলতো। স্কুল শেষ করে জিহান বাসায় এসে ফোন আর নাহলে কম্পিউটার এ গেম খেলতো।</p>
+                    <p>একদিন জিহান এর সানি নামের এক ফ্রেন্ড স্কুলে জিহানের আর এক ফ্রেন্ড লামিমকে একটা অ্যাপ এর কথা বলতে ছিল। জিহান ও ওই কথা শোনে লামিম এর সাথে। সানি বলে এই অ্যাপ এ এমসিকিউ এর প্র্যাকটিস করা যায়। লামিম সানিকে বলে অ্যাপ এর লিংকটা ওকে দিতে ও এই অ্যাপ এ এমসিকিউ প্র্যাকটিস করবে। জিহান বলে আমাকেও দিয়ো অ্যাপের লিংকটা দেখি অ্যাপটা ভালো লাগলে আমিও এমসিকিউ প্র্যাকটিস করবো।</p>
+                    <p>পরে জিহানকে সানি অ্যাপের এর লিংক পাঠায়। জিহান অ্যাপটা ডাউনলোড করে এমসিকিউ প্র্যাকটিস করে। জিহান দেখে এই অ্যাপ এ এমসিকিউ প্র্যাকটিস করা ছাড়া আরো অনেক কিছু আছে। অ্যাপটাতে একটা ডাউট সলভের জন্য অপশন আছে। এইখানে একজন অন্যজনকে প্রশ্ন করতে পারে, যাকে প্রশ্ন করে আনসার দিতে পারে।</p>
+                    <p>একদিন জিহান একটা প্রশ্ন করে। ওইখানে অনেক জন প্রশ্নটার আনসার দেয়। একটা মেয়ে জিহানের প্রশ্ন এর আনসার এ বলে "এই জিহান"। জিহান প্রথমে এর কোনো রিপ্লাই দেয় নাই। পরে জিহান চিন্তা করে মেয়েটা কোনো দরকার এ মেসেজ দিয়েছে নাকি। পরে জিহান রিপ্লাই দেয়।মেয়েটাকে জিহান হাই বললে মেয়েটা কোনো রিপ্লাই দেয় না।</p>
+                    <p>৫ দিন পরে মেয়েটা রিপ্লাই দেয়। রিপ্লাই এ বলে তুমি কি আমার ফ্রেন্ড হবে। জিহান বলে আচ্ছা আমরা ফ্রেন্ড আজকে থেকে। জিহান মেয়েটাকে ওর নাম জিজ্ঞাসা করে। মেয়েটা তারপর ওর নাম বলে জারা। এই ভাবেই শুরু হয় জিহান আর জারার কথা বলা। জিহান আর জারার মধ্যে রয়েছে অনেক মিল।</p>
+                </div>
+
+                <div class="chapter" id="chapter-2">
+                    <h2>দ্বিতীয় অধ্যায়</h2>
+                    <p>মেয়েটা জিহানকে বলে কি করো? জিহান বলে আমি একজন স্টুডেন্ট। জারা বলে আমি জানি এখন কি করো? জিহান বলে পড়তেসি। জিহান বলে তুমি কি করো? জারা বলে আমি ও পড়তেসি কালকে এক্সাম আছে। জিহান বলে প্রিটেস্ট এক্সাম নাকি? জারা বলে হুম। জিহান বলে এখন পড়াশোনা করো। জারা বলে হুম পড়তেসি তুমিই তো আমাকে কথার জালে ফাঁসিয়ে দিসো। জিহান বলে আচ্ছা তুমি এখন পড়াশোনা করো পরে মেসেজ দিও।</p>
+                    <p>জিহান মনে মনে ভাবে মেয়েটা এত সুন্দর করে সাজিয়ে কথা বলে কিভাবে?</p>
+                    <p>মেয়েটা প্রতিদিন জিহনকে মেসেজ দিতো। আর জিহান ও মেয়েটাকে রিপ্লাই দিতো। জিহান মেয়েটাকে জানতে চাচ্ছিল। জিহান মেয়েটাকে অনেক কিছু জিজ্ঞাসা করে।</p>
+                    <p>জিহান: তোমার স্কুলের নাম কি?
+                        <br>জারা: আমি বাংলাদেশ এগ্রিকালচার রিসার্চ ইনস্টিটিউট হাই স্কুল এ পরি বুঝলে? </p>
+                    <p>জিহান তখন গুগলে সার্চ করে ওর স্কুলের নাম আর দেখে জারাও গাজীপুরের একটা স্কুলে পড়ে।</p>
+                    <p>জারা: তুমি কোন স্কুলে পড়ো?
+                        <br>জিহান: গাজীপুরশাহীন ক্যাডেট একাডেমি।
+                        <br> জারা: তুমিও গাজীপুরে থাকো। আমার ভাইয়াও গাজীপুরশাহীন ক্যাডেট একাডেমিতে পড়ে।
+                        <br>জিহান: আমি গাজীপুরশাহীন ক্যাডেট একাডেমির মাওনা ব্রাঞ্চ এ পড়ি।
+                        <br>জারা: ও আচ্ছা। </p>
+                    <p>জিহান জানার পরেও মেয়েটাকে বলে তুমি ও তাইলে গাজীপুরে থাকো। জারা বলে তুমিও তো গাজীপুরে থাকো। জারা বলে এই তোমার গ্রামের বাড়ি কোথায়? জিহান বলে গাজীপুরেই আমার গ্রামের বাড়ি আর এখানেই থাকি। তোমার গ্রামের বাড়ি কোথায়? জারা বলে আমার  গ্রামের বাড়ি এখানেই আর আমি গাজীপুরের স্থানীয়। জিহান বলে আমিও তো স্থানীয় গাজীপুরের। জারা বলে তাহলে তো তুই আমার দেশি। </p>
+                    <p>জারা বলে জিহান কিছু মনে করবা না তোমার একটা ছবি দিবা। তুমি যেহেতু আমাকে তোমার ফ্রেন্ড বলছো এই জন্য তোমাকে দেখার ইচ্ছা।</p>
+                </div>
+
+                <div class="chapter" id="chapter-3">
+                    <h2>তৃতীয় অধ্যায়</h2>
+                    <p>জিহান আজ পর্যন্ত কাউকে ওর ছবি দেয় নাই। জিহানের কেমন যেন লাগতেছিল। তাই জিহান বলে তুমি কি ফেসবুক চালাও ফেসবুকে আমার ছবি আছে। মনে জিহান ওর ছবি না দিয়ে ওর ছবি দেখতে বলে ফেসবুকে। যাতে জিহানের ছবি না দিতে হয় আর জারাও জিহানের ছবি দেখতে পায়।</p>
+                    <p>জারা: আমি চিনব কিভাবে?
+                       <br> জিহান: ফেসবুকে সার্চ কর আমার আইডি উপরে আসবে। ফ্রেন্ড রিকোয়েস্ট দিয়ো কিন্তু।
+                       <br> জারা: এই শোনো এইটা কিন্তু আমার আম্মুর আইডি কোনো মেসেজ দিও না বুঝলা। আমার ভাইয়া দেখলে বকা দিবে। </p>
+                    <p>জিহান মনে করে সে ফ্রেন্ড রিকোয়েস্ট দিবে। কিন্তু সে কোন ফ্রেন্ড রিকোয়েস্ট পাইনা।</p>
+                    <p>জিহান: কোনটা আবার তোমার আম্মুর আইডি?
+                       <br> জারা: আমার কোন আইডি নেই আমি আম্মুর আইডি চালাই। 
+                       <br> জিহান: তুমি কি ইনস্টাগ্রাম চালাও?
+                       <br> জারা: না আমি ইনস্টাগ্রাম চালাই না।</p>
+                    <p>জারা জিহানের ছবি দিয়ে বলে।</p>
+                    <p>জারা: এটা কি তোমার ছবি?
+                       <br> জিহান: হুম।</p>
+                    <p>আরও অনেক কথা হয় জিহান আর জারার মধ্যে। জিহান মেসেজ না দিলে জারা বলতো জিহান তুমি আমাকে এত তাড়াতাড়ি ভুলে গেলে। এই ভাবে ৭ দিন কেটে গেল।</p>
+                    <p>জারা: আচ্ছা তোমার জন্মদিন কবে? 
+                       <br> জিহান: ২৮ শে সেপ্টেম্বর, তুমার?
+                       <br> জারা: আগস্টের ৭ তারিখ।
+                       <br> জিহান: পরীক্ষা শেষ? 
+                       <br> জারা: না। জানো আজকে আমার এক ফ্রেন্ডের জন্মদিন।
+                       <br> জিহান: নাম কি ওর? 
+                       <br> জারা: আদিব।
+                       <br> জিহান: ওকে আমার পক্ষ থেকে জন্মদিনের উইশ কইরো। আর বইলো ও আমার ফ্রেন্ড হবে নাকি? 
+                       <br> জারা: এইটা বলা যাবে না। আদিব বলে আমি নাকি ওকে ভুলে গেছি। পরে আমি ওকে বলছি আমার একটা বেস্ট ফ্রেন্ড আছে। ও আমাকে বলে তাহলে আর আমার সাথে কথা বলবি না। আদিব আমাকে বলে ওর নাম কি। আমি বলছি ওর নাম জিহান। পরে আদিব কিছুই বলে নাই।</p>
+                    <p>জিহান মনে মনে ভাবে আমি ওর বেস্ট ফ্রেন্ড। ও আমাকে ওর বেস্ট ফ্রেন্ড বললো। জিহান জারাকে কোনো রিপ্লাই দেয় নাই এই কথার।</p>
+                </div>
+
+                <div class="chapter" id="chapter-4">
+                    <h2>চতুর্থ অধ্যায়</h2>
+                    <p>জারা বলে তোমার সব সিলেবাস শেষ? জিহান বলে না। গণিত সিলেবাস শেষ হয়েছে শুধু। জারা বলে আচ্ছা আমরা কি ফ্রেন্ড থেকে বেস্ট হতে পারি না। জিহান বলে আচ্ছা আমরা আজকে থেকে বেস্ট ফ্রেন্ড। জারা বলে এই তুমি কি আমাকে মিস করো? জিহান খেয়াল করে মেয়েটার কথা সত্যিই মনে পড়ে। জিহান বলে হুম মিস করি। জারা বলে তাহলে তুমি আমাকে মিস করো। জিহান বলে হুম মিস করি।</p>
+                    <p>এই ভাবে প্রতিদিন জিহান আর জারার মধ্যে কথা হয়। এখন জারা আর জিহান বেস্ট ফ্রেন্ড।</p>
+                    <p>জারা জিহানের সবগুলা ছবি দেখে জিহানের ফেসবুক আইডি থেকে ওইখানে জিহানের স্কুল ইউনিফর্ম পড়া ছবি ছিল। জারা বলে জিহান তোমাকে স্কুলের ইউনিফর্ম পড়লে অনেক সুন্দর দেখায়। কিন্তু ইন করলে আরো সুন্দর লাগবে তোমাকে বোঝলা।</p>
+                    <p>জিহান: ইন তো করি কিন্তু ওইদিন ইন করি নাই।
+                       <br> জারা: এই কথা বললাম আবার এইটা নিয়ে কিছু ভাইবো না। এমনেই বললাম আর কি।
+                       <br> জিহান: আচ্ছা।</p>
+                    <p>জিহানের কেন জানি মেয়েটাকে ভালো লাগতে শুরু হয়। কেন জানি মনে মনে মেয়েটাকে নিয়ে ভাবতে শুরু করে জিহান। কিন্তু জিহান জানতো না যে মেয়েটা কি ভাবে জিহানকে নিয়ে। জিহান আর জারা বেস্ট ফ্রেন্ড হবার পরে থেকে ওদের মধ্যের কথাগুলা গভীর হয়।</p>
+                    <p>জারা: তুমি আঙ্কেলকে ভয় পাও নাকি অ্যান্টিকে?
+                       <br> জিহান: ভয় পাবো কেন?
+                       <br> জারা: না অনেকে আম্মুকে অথবা আব্বুকে ভয় পায়।
+                       <br> জিহান: আম্মুকে ভয় পাই। তুমি?
+                       <br> জারা: আমিও আম্মুকে ভয় পাই।</p>
+                    <p>এই ভাবে আস্তে আস্তে ওদের ফ্যামিলি নিয়ে কথা শুরু হয়।</p>
+                </div>
+                
+                <div class="chapter" id="chapter-5">
+                    <h2>পঞ্চম অধ্যায়</h2>
+                    <p>প্রিটেস্ট এক্সাম শেষ এ জারা বলে জিহান আমার এক্সাম শেষ। জানো উচ্চতর গণিত প্রশ্ন অনেক কঠিন হইসে। ওই দিন জিহানের ও পরীক্ষার রেজাল্ট দেয়। জিহান বলে আমার আজকে রেজাল্ট দিছে আমি উচ্চতর গণিতে সবচেয়ে কম নাম্বার পাইছি। জারা বলে উচ্চতর গণিতে কম নম্বর পাইছো তো কি হইছে টেস্টে ভালো করবা ইনশাল্লাহ। জিহান বলে তোমার প্রশ্নের ছবি দাও তো। জারা প্রশ্নের ছবি দেয় আর এটা ছিল জিহানকে জারার দেওয়া প্রথম ছবি।</p>
+                    <p>জারা: এই তুমি ঘুমাও কখন?
+                       <br> জিহান: ৯ টা থেকে ১২ টার মধ্যে। তুমি?
+                       <br> জারা: আমি ১ টাই।
+                       <br> জিহান: উঠো কখন ঘুম থেকে?
+                       <br> জারা: ৫ টাই, তুমি?
+                       <br> জিহান: ৪ টাই। এখন কি করো?
+                       <br> জারা: এখন আমি পড়তাছি বায়োলজি।
+                       <br> জিহান: আচ্ছা এখন বিরক্ত করলাম।</p>
+                    <p>পরের দিন জারা বলে জিহান আজকে তো শুক্রবার নামাজ পড়তে যাবে না? জিহান বলে যাবতো।</p>
+                    <p>জিহানের ইচ্ছা মেয়েটাকে জানার জিহান মেয়েটাকে ওর সম্পূর্ণ নাম জিজ্ঞাসা করে। মেয়েটাও ওর সম্পূর্ণ নাম জিহানকে বলে। জারা বলে তুমি কি রিলস দেখো। জিহান বলে হুম তুমি কিভাবে জানো। জারা বলে এমনি জানালাম তুমি তো আমার ফ্রেন্ড টাই এক ফ্রেন্ড অন্য ফ্রেন্ডের মনের খবর জানে। </p>
+                    <p>জিহান: তুমি কি করো?
+                       <br> জারা: আমি গান শুনি।
+                       <br> জিহান: তোমার ফেভারিট গানের নাম কি? 
+                       <br> জারা: Chal diye তুমার?
+                       <br> জিহান: Phir Bhi Tumko Chaahunga এইটা।</p>
+                    <p>এই ভাবেই ওদের কথা চলতে থাকে।</p>
+                </div>
+                
+                <div class="chapter" id="chapter-6">
+                    <h2>ষষ্ঠ অধ্যায়</h2>
+                    <p>জারা: তুমি কি প্রতিদিন নামাজ পড়ো নাকি শুধু শুক্রবারে? 
+                       <br> জিহান: প্রতিদিন নামাজ পড়ি। তুমি?
+                       <br> জারা: আমি প্রতিদিন নামাজ পড়ি না।
+                       <br> জিহান: তুমি কি শুধু নামাজ পড়ো নাকি?
+                       <br> জারা: আরে না পাগল।
+                       <br> জিহান: আচ্ছা। আমি এখন স্কুলে যাবো ১২ টাই আসবো। 
+                       <br> জারা: আচ্ছা তাহলে সাবধানে যাইও।</p>
+                    <p>জিহান স্কুল থেকে এসে দেখে জারা মেসেজ দিছে তুমি কি আমাকে মিস কর। জিহান বলে হুম মিস করি, তুমি? জারা বলে আমিও তুমাকে অনেক মিস করি।</p>
+                    <p>জিহান: কি করো?
+                       <br> জারা: আমি কি করতে পারি তুমি বলতো? আমি পড়াশোনা করতেসি আর তুমার সাথে কথা বলতেসি। জানো আজকে আমার রেজাল্ট দিছে আমি উচ্চতর গণিতে এ প্লাস পেয়েছি। আচ্ছা তুমি কি আমাকে ইগনোর কর।
+                       <br> জিহান: আরে না। আমি কি মেসেজ দিবো তোমাকে এইটাই খুঁজে পাই না।
+                       <br> জারা: এইটা কোনো কথা নাকি জিহান। তুমি আমাকে কি মেসেজ দিবা খুঁজে পাও না। আচ্ছা কি করো?
+                       <br> জিহান: খাইতেছি। তুমি?
+                       <br>জারা: আমিও খাইতেছি আর তোমার কথা ভাবতেসি।</p>
+                    <p>খাবার শেষ করে জিহান বলে পড়া শেষ নাকি? জারা বলে না। এখন ঘুমাবা নাকি? জিহান বলে না। রসায়ন পড়ব এখন।</p>
+                    <p>জারা বলে জিহান তোমার ড্রিম কি?</p>
+                    <p>(চলবে...)</p>
+                </div>
+
+            </div>
+
+            <div class="pagination">
+                <button id="prevBtn" style="visibility: hidden;">← পূর্ববর্তী অধ্যায়</button>
+                <button id="nextBtn">পরবর্তী অধ্যায় →</button>
+                <button id="finishBtn" style="display: none;">বই পড়া শেষ করুন 🏠</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer Area -->
+    <footer>
+        <div>&copy; ২০২৬ জিহান ফকির (Zihan Fakir)। সর্বস্বত্ব সংরক্ষিত।</div>
+        <div class="powered-by">
+            <div class="powered-text">Powered by</div>
+            <div class="tech-logos">
+                <img src="1.png" alt="ZIHAN" class="tech-logo">
+                <img src="3.png" alt="Zihan Fakir" class="tech-logo">
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        /* =========================================
+           ANTI-COPY SCRIPT (Zero Lag Setup)
+           ========================================= */
+        ['contextmenu', 'copy', 'cut', 'dragstart', 'selectstart'].forEach(event => 
+            document.addEventListener(event, e => e.preventDefault(), { passive: false })
+        );
+        /* ========================================= */
+
+        /* Security Wrappers */
+        function safeSetStorage(key, value) { try { localStorage.setItem(key, value); } catch (e) { } }
+        function safeGetStorage(key) { try { return localStorage.getItem(key); } catch (e) { return null; } }
+
+        /* Custom Cursor Logic (Disabled on mobile to save CPU) */
+        const isTouchDevice = window.matchMedia("(hover: none) and (pointer: coarse)").matches;
+        if (!isTouchDevice) {
+            const cursorDot = document.getElementById("cursor-dot");
+            const cursorOutline = document.getElementById("cursor-outline");
+            
+            // Optimized mousemove using requestAnimationFrame for zero-lag
+            let mouseX = 0, mouseY = 0;
+            window.addEventListener("mousemove", (e) => {
+                mouseX = e.clientX; mouseY = e.clientY;
+                requestAnimationFrame(() => {
+                    cursorDot.style.left = `${mouseX}px`; cursorDot.style.top = `${mouseY}px`;
+                    cursorOutline.animate({ left: `${mouseX}px`, top: `${mouseY}px` }, { duration: 500, fill: "forwards" });
+                });
+            }, { passive: true });
+
+            const toggleCursor = (e, enlarge) => {
+                if (e.target.closest('button, h2, .logo, .item-card, .bookmark-btn, .item-title, .book-cover, .theme-option, .tech-logo')) {
+                    cursorOutline.style.width = enlarge ? '60px' : '40px';
+                    cursorOutline.style.height = enlarge ? '60px' : '40px';
+                    cursorOutline.style.backgroundColor = enlarge ? 'var(--cursor-color)' : 'transparent';
+                }
+            };
+            document.addEventListener("mouseover", e => toggleCursor(e, true), { passive: true });
+            document.addEventListener("mouseout", e => toggleCursor(e, false), { passive: true });
+        }
+
+        /* Smooth Theme Switch */
+        const themeDropdown = document.getElementById('themeDropdown');
+        const themeToggleBtn = document.getElementById('themeToggleBtn');
+        const themeOptions = document.querySelectorAll('.theme-option');
+        let isSwitchingTheme = false;
+
+        function updateActiveThemeOption(themeValue) {
+            themeOptions.forEach(opt => opt.classList.toggle('active-theme', opt.getAttribute('data-theme-value') === themeValue));
+        }
+        updateActiveThemeOption(savedTheme);
+
+        themeToggleBtn.addEventListener('click', (e) => { e.stopPropagation(); themeDropdown.classList.toggle('open'); });
+        
+        // Use pointerdown/touchstart for faster mobile response
+        ['click', 'touchstart'].forEach(evt => document.addEventListener(evt, e => { 
+            if (!themeDropdown.contains(e.target)) themeDropdown.classList.remove('open'); 
+        }, { passive: true }));
+
+        themeOptions.forEach(option => {
+            option.addEventListener('click', () => {
+                if (isSwitchingTheme) return;
+                isSwitchingTheme = true;
+                const selectedTheme = option.getAttribute('data-theme-value');
+                themeDropdown.classList.remove('open');
+                updateActiveThemeOption(selectedTheme);
+
+                const elementsToAnimate = [document.querySelector('header'), document.querySelector('.view-section.active'), document.querySelector('footer')];
+
+                elementsToAnimate.forEach(el => { if (el) { el.classList.remove('theme-animating'); void el.offsetWidth; el.classList.add('theme-animating'); } });
+
+                setTimeout(() => { document.documentElement.setAttribute('data-theme', selectedTheme); safeSetStorage('theme', selectedTheme); }, 200);
+                setTimeout(() => { elementsToAnimate.forEach(el => { if (el) el.classList.remove('theme-animating'); }); isSwitchingTheme = false; }, 450);
+            });
+        });
+
+        /* Setup Reading Progress */
+        const chapters = document.querySelectorAll('.chapter');
+        document.getElementById('totalChaptersCount').innerText = chapters.length;
+
+        let currentChapterIndex = parseInt(safeGetStorage('currentChapterIndex')) || 0;
+        if (currentChapterIndex >= chapters.length) currentChapterIndex = Math.max(0, chapters.length - 1);
+        let hasStartedReading = safeGetStorage('currentChapterIndex') !== null;
+
+        let maxChapterRead = parseInt(safeGetStorage('maxChapterRead'));
+        if (isNaN(maxChapterRead) || maxChapterRead >= chapters.length) maxChapterRead = -1;
+
+        /* Bookmarks Array */
+        let bookmarks = [];
+        try { bookmarks = JSON.parse(safeGetStorage('bookmarks')) || []; if (!Array.isArray(bookmarks)) bookmarks = []; } catch (e) { bookmarks = []; }
+
+        /* Views Navigation Logic */
+        const views = { home: document.getElementById('home-view'), reading: document.getElementById('reading-view'), bookmarks: document.getElementById('bookmarks-view') };
+        const homeBtn = document.getElementById('homeBtn');
+        let isSwitching = false;
+
+        function switchView(target) {
+            if (isSwitching || views[target].classList.contains('active')) return;
+            isSwitching = true;
+            Object.keys(views).forEach(v => views[v].classList.remove('active'));
+
+            setTimeout(() => {
+                Object.keys(views).forEach(v => views[v].style.display = 'none');
+                views[target].style.display = 'block';
+                void views[target].offsetWidth;
+
+                views[target].classList.add('active');
+                homeBtn.style.display = target === 'home' ? 'none' : 'inline-block';
+
+                if (target === 'reading') renderChapter(currentChapterIndex);
+                else if (target === 'bookmarks') renderBookmarksPage();
+                else if (target === 'home') { updateDashboard(); renderTOC(); }
+
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                setTimeout(() => { isSwitching = false; }, 400);
+            }, 300); // slightly faster transitions
+        }
+
+        document.getElementById('logoBtn').addEventListener('click', () => switchView('home'));
+        homeBtn.addEventListener('click', () => switchView('home'));
+        document.getElementById('bookmarkPageBtn').addEventListener('click', () => switchView('bookmarks'));
+        document.getElementById('finishBtn').addEventListener('click', () => switchView('home'));
+
+        document.getElementById('mainReadBtn').addEventListener('click', () => {
+            if (isSwitching) return;
+            if (currentChapterIndex === chapters.length - 1 && hasStartedReading) currentChapterIndex = 0;
+            hasStartedReading = true; switchView('reading');
+        });
+
+        /* Render Reading Chapter */
+        function renderChapter(index) {
+            chapters.forEach(ch => ch.classList.remove('active-chapter'));
+            if (chapters[index]) {
+                chapters[index].classList.add('active-chapter');
+                currentChapterIndex = index;
+                hasStartedReading = true;
+                safeSetStorage('currentChapterIndex', index);
+                if (index > maxChapterRead) { maxChapterRead = index; safeSetStorage('maxChapterRead', maxChapterRead); }
+            }
+
+            document.getElementById('prevBtn').style.visibility = index === 0 ? 'hidden' : 'visible';
+            
+            if (index === chapters.length - 1 && chapters.length > 0) {
+                document.getElementById('nextBtn').style.display = 'none'; document.getElementById('finishBtn').style.display = 'block';
+            } else {
+                document.getElementById('nextBtn').style.display = 'block'; document.getElementById('finishBtn').style.display = 'none';
+            }
+
+            let prog = chapters.length > 0 ? ((index + 1) / chapters.length) * 100 : 0;
+            document.getElementById('floating-bar').style.width = prog + '%';
+        }
+
+        function navigateChapter(direction) {
+            let nextIndex = currentChapterIndex + direction;
+            if (nextIndex >= 0 && nextIndex < chapters.length) { renderChapter(nextIndex); window.scrollTo({ top: 0, behavior: 'smooth' }); }
+        }
+
+        document.getElementById('prevBtn').addEventListener('click', () => navigateChapter(-1));
+        document.getElementById('nextBtn').addEventListener('click', () => navigateChapter(1));
+
+        /* Dynamic Bookmarks & TOC */
+        function toggleBookmark(chapId, element) {
+            if (bookmarks.includes(chapId)) {
+                bookmarks = bookmarks.filter(b => b !== chapId);
+                if (element) element.classList.remove('active');
+            } else {
+                bookmarks.push(chapId);
+                if (element) element.classList.add('active');
+            }
+            safeSetStorage('bookmarks', JSON.stringify(bookmarks));
+            if (views.bookmarks.classList.contains('active')) renderBookmarksPage();
+        }
+
+        function renderTOC() {
+            const tocList = document.getElementById('toc-list');
+            tocList.innerHTML = '';
+            chapters.forEach((chapter, index) => {
+                const title = chapter.querySelector('h2').innerText;
+                const chapId = chapter.id;
+                const isBookmarked = bookmarks.includes(chapId) ? 'active' : '';
+
+                const item = document.createElement('div');
+                item.className = 'item-card';
+                item.onclick = function () { window.openChapter(index); };
+                item.innerHTML = `<div class="item-title">${title}</div><button class="bookmark-btn ${isBookmarked}" data-id="${chapId}" aria-label="বুকমার্ক করুন">★</button>`;
+                tocList.appendChild(item);
+            });
+            tocList.querySelectorAll('.bookmark-btn').forEach(btn => { btn.addEventListener('click', function (e) { e.stopPropagation(); toggleBookmark(this.getAttribute('data-id'), this); }); });
+        }
+
+        function renderBookmarksPage() {
+            const bList = document.getElementById('bookmark-list');
+            bList.innerHTML = '';
+            if (bookmarks.length === 0) { bList.innerHTML = '<div class="empty-message">কোনো অধ্যায় বুকমার্ক করা নেই।</div>'; return; }
+
+            chapters.forEach((chapter, index) => {
+                if (bookmarks.includes(chapter.id)) {
+                    const item = document.createElement('div'); item.className = 'item-card';
+                    item.onclick = function () { window.openChapter(index); };
+                    item.innerHTML = `<div class="item-title">${chapter.querySelector('h2').innerText}</div><button class="bookmark-btn active" data-id="${chapter.id}" aria-label="বুকমার্ক রিমুভ করুন">★</button>`;
+                    bList.appendChild(item);
+                }
+            });
+            bList.querySelectorAll('.bookmark-btn').forEach(btn => { btn.addEventListener('click', function (e) { e.stopPropagation(); toggleBookmark(this.getAttribute('data-id'), this); }); });
+        }
+
+        window.openChapter = function (index) {
+            if (isSwitching) return;
+            currentChapterIndex = index; hasStartedReading = true; switchView('reading');
+        };
+
+        function updateDashboard() {
+            const mainBtn = document.getElementById('mainReadBtn');
+            if (!hasStartedReading) mainBtn.innerText = "পড়া শুরু করুন";
+            else if (currentChapterIndex === chapters.length - 1 && chapters.length > 0) mainBtn.innerText = "আবার শুরু করুন";
+            else mainBtn.innerText = "পড়া চালিয়ে যান";
+        }
+
+        /* Font Family Control */
+        const fontSelect = document.getElementById('fontSelect');
+        let currentFontFamily = safeGetStorage('readingFontFamily') || "'Noto Serif Bengali', serif";
+
+        document.documentElement.style.setProperty('--reading-font-family', currentFontFamily);
+
+        Array.from(fontSelect.options).forEach(opt => {
+            if (opt.value === currentFontFamily) fontSelect.value = opt.value;
+        });
+
+        fontSelect.addEventListener('change', (e) => {
+            currentFontFamily = e.target.value;
+            document.documentElement.style.setProperty('--reading-font-family', currentFontFamily);
+            safeSetStorage('readingFontFamily', currentFontFamily);
+        });
+
+        /* Font Size Control */
+        let currentFontSize = parseInt(safeGetStorage('readingFontSize')) || 18;
+        document.documentElement.style.setProperty('--reading-font-size', currentFontSize + 'px');
+
+        function updateFontSize(newSize) {
+            if (newSize < 14) newSize = 14; if (newSize > 30) newSize = 30;
+            currentFontSize = newSize;
+            document.documentElement.style.setProperty('--reading-font-size', currentFontSize + 'px');
+            safeSetStorage('readingFontSize', currentFontSize);
+        }
+
+        document.getElementById('decreaseFontBtn').addEventListener('click', () => updateFontSize(currentFontSize - 2));
+        document.getElementById('increaseFontBtn').addEventListener('click', () => updateFontSize(currentFontSize + 2));
+        document.getElementById('resetFontBtn').addEventListener('click', () => updateFontSize(18));
+
+        /* Application Init */
+        updateDashboard(); renderTOC();
+    </script>
+</body>
+
+</html>
